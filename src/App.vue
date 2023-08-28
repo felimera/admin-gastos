@@ -22,6 +22,11 @@ const mostrarModal = () => {
     modal.mostrar = true;
     modal.animar = true;
 }
+
+const ocultarModal = () => {
+    modal.mostrar = false;
+    modal.animar = false;
+}
 </script>
 
 <template>
@@ -39,7 +44,7 @@ const mostrarModal = () => {
                 <img :src="imagenNuevoGasto" alt="icono nuevo gasto" @click="mostrarModal" />
             </div>
 
-            <Modal v-if="modal.mostrar" />
+            <Modal v-if="modal.mostrar" @ocultar-modal="ocultarModal" />
         </main>
     </div>
 </template>
