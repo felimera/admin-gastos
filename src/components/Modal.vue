@@ -5,7 +5,7 @@ import cerrarModal from '../assets/img/cerrar.svg';
 
 const error = ref('');
 
-const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria'])
+const emit = defineEmits(['ocultar-modal', 'guardar-gasto', 'update:nombre', 'update:cantidad', 'update:categoria'])
 const props = defineProps({
     modal: {
         type: Object,
@@ -45,6 +45,8 @@ const agregarGasto = () => {
         }, 3000);
         return
     }
+
+    emit('guardar-gasto')
 }
 </script>
 
