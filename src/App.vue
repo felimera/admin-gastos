@@ -70,6 +70,14 @@ const guardarGasto = () => {
         fecha: Date.now()
     });
 }
+
+const seleccionarGasto = id => {
+    console.log('id', id);
+    const editarGasto = gastos.value.filter(gasto => gasto.id === id)[0];
+    Object.assign(gasto, editarGasto);
+    mostrarModal();
+}
+
 </script>
 
 <template>
@@ -87,7 +95,7 @@ const guardarGasto = () => {
             <div class="listado-gasto contenedor">
                 <h2>{{ gastos.length ? 'Gastos' : 'No hay gastos' }}</h2>
 
-                <Gastos v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" />
+                <Gastos v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" @seleccionar-gasto="seleccionarGasto" />
             </div>
 
             <div class="crear-gasto">
