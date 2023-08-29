@@ -95,7 +95,8 @@ const guardarGasto = () => {
             </div>
 
             <Modal v-if="modal.mostrar" @ocultar-modal="ocultarModal" @guardar-gasto="guardarGasto" :modal="modal"
-                v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad" v-model:categoria="gasto.categoria" />
+                :disponible="disponible" v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad"
+                v-model:categoria="gasto.categoria" />
         </main>
     </div>
 </template>
