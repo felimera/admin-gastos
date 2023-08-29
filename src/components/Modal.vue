@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Alerta from './Alerta.vue';
 import cerrarModal from '../assets/img/cerrar.svg';
 
@@ -27,11 +27,17 @@ const props = defineProps({
         type: Number,
         required: true
     },
+    id: {
+        type: [String, null],
+        required: true
+    },
 })
+
+const old = props.cantidad;
 
 const agregarGasto = () => {
     // Validar campos vacios
-    const { nombre, cantidad, categoria, disponible } = props;
+    const { nombre, cantidad, categoria, disponible, id } = props;
     if ([nombre, cantidad, categoria].includes('')) {
         error.value = 'Todos los campos son obligatorios'
 
@@ -50,19 +56,32 @@ const agregarGasto = () => {
         return
     }
 
-    // Validar no gaste mas de lo disponible
-    if (cantidad > disponible) {
-        error.value = 'Has excedido el Presupuesto'
+    if (id) {
+        if (cantidad > (old + disponible)) {
+            error.value = 'Has excedido el Presupuesto'
 
-        setTimeout(() => {
-            error.value = ''
-        }, 3000);
-        return
+            setTimeout(() => {
+                error.value = ''
+            }, 3000);
+            return
+        }
+    } else {
+        // Validar no gaste mas de lo disponible
+        if (cantidad > disponible) {
+            error.value = 'Has excedido el Presupuesto'
+
+            setTimeout(() => {
+                error.value = ''
+            }, 3000);
+            return
+        }
     }
 
 
     emit('guardar-gasto')
 }
+
+const isEditing = computed(() => props.id);
 </script>
 
 <template>
@@ -73,7 +92,7 @@ const agregarGasto = () => {
 
         <div class="contenedor contenedor-formulario" :class="[modal.animar ? 'animar' : 'cerrar']">
             <form class="nuevo-gasto" @submit.prevent="agregarGasto">
-                <legend>Añadir Gasto</legend>
+                <legend>{{ isEditing ? 'Guardar Gasto' : 'Añadir Gasto' }} </legend>
 
                 <Alerta v-if="error">{{ error }}</Alerta>
 
@@ -101,7 +120,7 @@ const agregarGasto = () => {
                     </select>
                 </div>
 
-                <input type="submit" value="Añadir Gasto">
+                <input type="submit" :value="[isEditing ? 'Guardar Gasto' : 'Añadir Gasto']">
             </form>
         </div>
     </div>
