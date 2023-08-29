@@ -63,10 +63,16 @@ const ocultarModal = () => {
 }
 
 const guardarGasto = () => {
-    gastos.value.push({
-        ...gasto,
-        id: generarId()
-    });
+    if (gasto.id) {
+        const { id } = gasto;
+        const index = gastos.value.findIndex(gasto => gasto.id === id);
+        gastos.value[index] = { ...gasto }
+    } else {
+        gastos.value.push({
+            ...gasto,
+            id: generarId()
+        });
+    }
 
     ocultarModal();
     reiniciarStateGasto();
