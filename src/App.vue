@@ -96,6 +96,13 @@ const seleccionarGasto = id => {
     mostrarModal();
 }
 
+const eliminarGasto = () => {
+    if (confirm('Elimnar?')) {
+        gastos.value = gastos.value.filter(gastoState => gastoState.id !== gasto.id);
+        ocultarModal();
+    }
+}
+
 </script>
 
 <template>
@@ -120,9 +127,9 @@ const seleccionarGasto = id => {
                 <img :src="imagenNuevoGasto" alt="icono nuevo gasto" @click="mostrarModal" />
             </div>
 
-            <Modal v-if="modal.mostrar" @ocultar-modal="ocultarModal" @guardar-gasto="guardarGasto" :modal="modal"
-                :disponible="disponible" :id="gasto.id" v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad"
-                v-model:categoria="gasto.categoria" />
+            <Modal v-if="modal.mostrar" @ocultar-modal="ocultarModal" @guardar-gasto="guardarGasto"
+                @eliminar-gasto="eliminarGasto" :modal="modal" :disponible="disponible" :id="gasto.id"
+                v-model:nombre="gasto.nombre" v-model:cantidad="gasto.cantidad" v-model:categoria="gasto.categoria" />
         </main>
     </div>
 </template>
