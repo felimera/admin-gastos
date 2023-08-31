@@ -3,6 +3,7 @@ import { ref, reactive, watch } from 'vue';
 import Presupuesto from './components/Presupuesto.vue';
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import Modal from './components/Modal.vue';
+import Filtros from './components/Filtros.vue';
 import Gastos from './components/Gastos.vue';
 import { generarId } from './helpers';
 
@@ -15,6 +16,7 @@ const modal = reactive({
 const presupuesto = ref(0);
 const disponible = ref(0);
 const gastado = ref(0);
+const filtro = ref('');
 
 const gasto = reactive({
     nombre: '',
@@ -116,6 +118,8 @@ const eliminarGasto = () => {
         </header>
 
         <main v-if="presupuesto > 0">
+
+            <Filtros v-model:filtro="filtro" />
 
             <div class="listado-gasto contenedor">
                 <h2>{{ gastos.length ? 'Gastos' : 'No hay gastos' }}</h2>
