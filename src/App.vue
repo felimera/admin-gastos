@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch, computed } from 'vue';
+import { ref, reactive, watch, computed, onMounted } from 'vue';
 import Presupuesto from './components/Presupuesto.vue';
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import Modal from './components/Modal.vue';
@@ -43,6 +43,20 @@ watch(modal, () => {
     }
 }, {
     deep: true
+});
+
+watch(presupuesto, () => {
+    localStorage.setItem('presupuesto', presupuesto.value);
+}, {
+    deep: true
+});
+
+onMounted(() => {
+    const presupuestoStorage = localStorage.getItem('presupuesto');
+    if (presupuestoStorage) {
+        presupuesto.value = Number(presupuestoStorage);
+        disponible.value = Number(presupuestoStorage);
+    }
 });
 
 const definirPresupuesto = cantidad => {
