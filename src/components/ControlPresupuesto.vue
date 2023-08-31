@@ -49,7 +49,7 @@ const porcentaje = computed(() => parseInt(((props.presupuesto - props.disponibl
 .porcentaje {
     position: absolute;
     margin: auto;
-    top: calc(50%-1.5rem);
+    top: calc(50% - 1.5rem);
     left: 0;
     right: 0;
     text-align: center;
